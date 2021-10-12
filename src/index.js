@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App.js";
+import Weather from "./Weather.js";
 
-//import "./App.css";
+import "./Weather.css";
 
-function This() {
+function App() {
   return (
     <div className="App">
-      <App />
+      <Weather />
     </div>
   );
 }

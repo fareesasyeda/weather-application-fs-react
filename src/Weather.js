@@ -1,7 +1,9 @@
 import React from "react";
+//import axios from "axios";
+
 import "./App.css";
 
-export default function App() {
+export default function Weather() {
   let weatherData = {
     city: "Madrid",
     date: "Tuesaday, September 27, 2021 5:45am",
