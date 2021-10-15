@@ -1,24 +1,26 @@
 import React, { useState } from "react";
+import FormattedDate from "./FormattedDate.js";
 import axios from "axios";
 
 import "./Weather.css";
 
-export default function Weather() {
+export default function Weather(props) {
   //const { ready, setReady } = useState(false);
   const [weatherData, setWeatherData] = useState({ ready: false });
   function handleResponse(response) {
     console.log(response.data);
     setWeatherData({
-      ready: true;
+      ready: true,
       city: response.data.main.name,
-      date: "Tuesday, Sep 27, 2021 5:45am",
+
+      //date: "Tuesday, Sep 27, 2021 5:45am",
+      date: new Date(response.data.dt * 1000),
       temperature: response.data.main.temp,
       description: response.data.weather[0].description,
       iconUrl: "http://openweathermap.org/img/wn/01d@2x.png",
       humidity: response.data.main.humidity,
       wind: response.data.main.wind.speed,
     });
-   
   }
 
   if (weatherData.ready) {
@@ -52,7 +54,9 @@ export default function Weather() {
 
           <div className="row">
             <div className="col-4 border p-5 mt-5 mb-5 rounded shadow">
-              <h5>{weatherData.date}</h5>
+              <h5>
+                <FormattedDate date={weatherData.date} />
+              </h5>
             </div>
 
             <div className="col-4 border p-2 mt-1 mb-1 rounded shadow">
@@ -88,9 +92,9 @@ export default function Weather() {
     );
   } else {
     const apiKey = "6cb3c244f40c2fba37f9f592c3aba492";
-    let city = "Madrid";
+    //let city = "Madrid";
     let units = "metric";
-    let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+    let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=${units}`;
     axios.get(apiUrl).then(handleResponse);
 
     return "Loading...";
