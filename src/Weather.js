@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import WeatherDisplay from "./WeatherDisplay.js";
+import WeatherForecast from "./WeatherForecast.js";
 import axios from "axios";
 import "./Weather.css";
 
@@ -12,6 +13,7 @@ export default function Weather(props) {
     //console.log(response.data);
     setWeatherData({
       ready: true,
+      coordinates: response.data.coord,
       city: response.data.name,
       //date: "Tuesday, Sep 27, 2021 5:45am",
       date: new Date(response.data.dt * 1000),
@@ -23,14 +25,6 @@ export default function Weather(props) {
     });
   }
 
-  function search() {
-    const apiKey = "6cb3c244f40c2fba37f9f592c3aba492";
-    //let city = "Madrid";
-    let units = "metric";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
-    axios.get(apiUrl).then(handleResponse);
-  }
-
   function handleSubmit(event) {
     event.preventDefault();
     search();
@@ -38,6 +32,14 @@ export default function Weather(props) {
 
   function handleCityChange(event) {
     setCity(event.target.value);
+  }
+
+  function search() {
+    const apiKey = "6cb3c244f40c2fba37f9f592c3aba492";
+    //let city = "Madrid";
+    let units = "metric";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+    axios.get(apiUrl).then(handleResponse);
   }
 
   if (weatherData.ready) {
@@ -68,6 +70,7 @@ export default function Weather(props) {
           </div>{" "}
         </form>
         <WeatherDisplay data={weatherData} />
+        <WeatherForecast coordinates={weatherData.coordinates} />
       </div>
     );
   } else {

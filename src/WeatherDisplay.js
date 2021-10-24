@@ -13,12 +13,16 @@ export default function WeatherDisplay(props) {
           </h5>
         </div>
 
-        <div className="col-4 border p-2 mt-1 mb-1 rounded shadow">
+        <div className="col-4 border p-3 mt-0 mb-0 rounded shadow">
           <h2>
             <strong>{props.data.city}</strong>
           </h2>
           <div className="float-left m-0 p-0">
-            <WeatherIcon code={props.data.icon} alt={props.data.description} />
+            <WeatherIcon
+              code={props.data.icon}
+              size={52}
+              alt={props.data.description}
+            />
           </div>{" "}
           <h4 className="text-capitalize">{props.data.description}</h4>
           <WeatherTemperature celsius={props.data.temperature} />
